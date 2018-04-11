@@ -1,22 +1,22 @@
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('articles')
-    .controller('ArticlesListController', ArticlesListController);
+    angular
+        .module('articles')
+        .controller('ArticlesListController', ArticlesListController);
 
-  ArticlesListController.$inject = ['ArticlesService', '$scope', 'Socket'];
+    ArticlesListController.$inject = ['ArticlesService', '$scope', 'Socket'];
 
-  function ArticlesListController(ArticlesService, $scope, Socket) {
-    var vm = this;
+    function ArticlesListController(ArticlesService, $scope, Socket) {
+        var vm = this;
 
-    vm.articles = ArticlesService.query();
+        vm.articles = ArticlesService.query();
 
-    Socket.on('article.created', function(article) {
-      $scope.$apply(function(){
-            vm.articles.push(article);             
+        Socket.on('article.created', function(article) {
+            $scope.$apply(function() {
+                vm.articles.unshift(article);
+
+            });
         });
-      console.log(article);
-    });
-  }
+    }
 }());
