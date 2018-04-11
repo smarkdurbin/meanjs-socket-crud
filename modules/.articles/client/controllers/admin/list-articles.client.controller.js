@@ -1,20 +1,15 @@
-(function () {
+﻿(function () {
   'use strict';
 
   angular
     .module('articles.admin')
     .controller('ArticlesAdminListController', ArticlesAdminListController);
 
-  ArticlesAdminListController.$inject = ['ArticlesService', 'Socket'];
+  ArticlesAdminListController.$inject = ['ArticlesService'];
 
-  function ArticlesAdminListController(ArticlesService, Socket) {
+  function ArticlesAdminListController(ArticlesService) {
     var vm = this;
 
     vm.articles = ArticlesService.query();
-    
-    Socket.on('connection', function() {
-        console.log('connected');
-    });
-    
   }
 }());

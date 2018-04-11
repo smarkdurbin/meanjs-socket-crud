@@ -1,25 +1,22 @@
-(function () {
-  'use strict';
+(function() {
+    'use strict';
 
-  angular
-    .module('articles')
-    .controller('ArticlesListController', ArticlesListController);
+    angular
+        .module('articles')
+        .controller('ArticlesListController', ArticlesListController);
 
-  ArticlesListController.$inject = ['ArticlesService', 'Authentication', 'Socket'];
+    ArticlesListController.$inject = ['ArticlesService', '$scope', 'Socket', 'Notification'];
 
-  function ArticlesListController(ArticlesService, Authentication, Socket) {
-    var vm = this;
-    
-    // Make sure the Socket is connected
-      if (!Socket.socket) {
-        Socket.connect();
-      }
+    function ArticlesListController(ArticlesService, $scope, Socket, Notification) {
+        var vm = this;
 
-      // Add an event listener to the 'chatMessage' event
-      Socket.on('chatMessager', function (message) {
-        console.log(message);
-      });
+        vm.articles = ArticlesService.query();
 
-    vm.articles = ArticlesService.query();
-  }
+        Socket.on('article.created', function(article) {
+            $scope.$apply(function() {
+                vm.articles.unshift(article);
+                Notification.info({ message: '<i class="glyphicon glyphicon-ok"></i> New article <strong>'+article.title+'</strong> added!' });
+            });
+        });
+    }
 }());
