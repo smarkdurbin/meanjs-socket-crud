@@ -1,26 +1,109 @@
-﻿<section>
-  <div class="page-header">
-    <h1>
-      Viewers
-      <a class="btn btn-primary pull-right" data-ui-sref="admin.viewers.create">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </h1>
-  </div>
-  <div class="list-group">
-    <a data-ng-repeat="viewer in vm.viewers" data-ui-sref="admin.viewers.edit({viewerId: viewer._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="viewer.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="viewer.user" ng-bind="viewer.user.displayName"></span>
-        <span ng-if="!viewer.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" data-ng-bind="viewer.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="viewer.content"></p>
-    </a>
-  </div>
-  <div class="alert alert-warning text-center" data-ng-if="vm.viewers.$resolved && !vm.viewers.length">
-    No viewers yet, why don't you <a data-ui-sref="admin.viewers.create">create one</a>?
-  </div>
+<section>
+    <div class="page-header">
+        <h1>
+            Viewer Records
+            <a class="btn btn-primary pull-right" data-ui-sref="admin.viewers.create">
+                <i class="fas fa-plus"></i>&nbsp; Add Viewer Record
+            </a>
+            &nbsp;
+            <a class="btn btn-default pull-right hidden" data-ui-sref="admin.viewers.create">
+                <i class="fas fa-save"></i>&nbsp; Cache Viewer Screenshots
+            </a>
+        </h1>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12 col-lg-4 form-inline">
+            <div class="form-group">
+                <label for="filter">
+                    Keyword Filter: &nbsp;
+                </label>
+                <input id="filter" name="filter"  class="form-control" type="text" ng-model="vm.search" placeholder="Filter" ng-change="vm.figureOutItemsToDisplay()" />
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-xs-12 col-lg-4 col-lg-push-4 form-inline text-right">
+            <div class="form-group">
+                <label for="itemsPerPage">
+                    Items Per Page: &nbsp;
+                </label>
+                <input class="form-control" id="itemsPerPage" name="itemsPerPage" type="number" step="1" min="1" max="100" ng-model="itemsPerPage" value="10" ng-change="vm.figureOutItemsToDisplay()" />
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+    <!--./row-->
+
+    <br>
+    
+
+    <table class="table table-responsive table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Display Name
+                </th>
+                <th>
+                    Viewer Name
+                </th>
+                <th>
+                    Created
+                </th>
+                <th>
+                    Last Updated
+                </th>
+                
+                <th>
+                    Screenshot Updated
+                </th>
+                <th class="text-center">
+                    <i class="fas fa-sticky-note"></i>
+                </th>
+                <th class="text-center">
+                    <i class="fas fa-image"></i>
+                </th>
+                <th class="text-center">
+                    <i class="fas fa-edit"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="viewer in vm.pagedItems">
+                <td data-ng-bind="$index + 1"></td>
+                <td data-ng-bind="viewer.display_name"></td>
+                <td data-ng-bind="viewer.viewer_name"></td>
+                <td am-time-ago="viewer.created"></td>
+                <td am-time-ago="viewer.updated"></td>
+                <td am-time-ago="viewer.screenshot_updated"></td>
+                <td class="text-center">
+                    <a href="" class="btn btn-info btn-xs btn-block">
+                        <i class="fas fa-sticky-note"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a href="" class="btn btn-success btn-xs btn-block">
+                        <i class="fas fa-image"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-warning btn-xs btn-block" data-ui-sref="admin.viewers.edit({viewerId: viewer._id})">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row" ng-hide="vm.viewers.length <= itemsPerPage">
+        <div class="col-xs-12 text-center">
+            <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
+        </div>
+        <!--/.col-->
+    </div>
+    <!--./row-->
+    
 </section>
+

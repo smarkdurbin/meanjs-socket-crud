@@ -1,30 +1,83 @@
 <section>
-  <div class="page-header">
-    <h1>{{vm.viewer._id ? 'Edit Viewer' : 'New Viewer'}}</h1>
-  </div>
-  <div class="pull-right">
-    <a ng-show="vm.viewer._id" class="btn btn-primary" ng-click="vm.remove()">
+    <div class="page-header">
+        <h1>{{vm.viewer._id ? 'Edit Viewer' : 'New Viewer'}}</h1>
+    </div>
+    <div class="pull-right">
+        <a ng-show="vm.viewer._id" class="btn btn-primary" ng-click="vm.remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
-  </div>
-  <div class="col-md-12">
-    <form name="vm.form.viewerForm" class="form-horizontal" ng-submit="vm.save(vm.form.viewerForm.$valid)" novalidate>
-      <fieldset>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="title">Title</label>
-          <input name="title" type="text" ng-model="vm.viewer.title" id="title" class="form-control" placeholder="Title" required autofocus>
-          <div ng-messages="vm.form.viewerForm.title.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Viewer title is required.</p>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="content">Content</label>
-          <textarea name="content" data-ng-model="vm.viewer.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.viewer._id ? 'Update' : 'Create'}}</button>
-        </div>
-      </fieldset>
-    </form>
-  </div>
+    </div>
+    <div class="col-md-12">
+        <form name="vm.form.viewerForm" class="form-horizontal" ng-submit="vm.save(vm.form.viewerForm.$valid)" novalidate>
+            <fieldset>
+                <div class="form-group" show-errors>
+                    <label class="control-label" for="viewer_name">Viewer Name</label>
+                    <input name="viewer_name" type="text" ng-model="vm.viewer.viewer_name" id="viewer_name" class="form-control" placeholder="Viewer Name" required autofocus>
+                    <div ng-messages="vm.form.viewerForm.viewer_name.$error" role="alert">
+                        <p class="help-block error-text" ng-message="required">Viewer name is required.</p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label class="control-label" for="display_name">Display Name</label>
+                    <input name="display_name" type="text" ng-model="vm.viewer.display_name" id="display_name" class="form-control" placeholder="Display Name">
+                    <div ng-messages="vm.form.viewerForm.display_name.$error" role="alert">
+                        <p class="help-block error-text hidden" ng-message="required">Display name is required.</p>
+                    </div>
+                </div>
+                <div class="form-group" required>
+                    <label class="control-label" for="screen_orientation">Screen Orientation</label>
+                    <select id="screen_orientation" class="form-control" ng-model="vm.viewer.screen_orientation">
+                        <option value="" disabled>Please make a selection</option>
+                        <option value="Landscape">Landscape</option>
+                        <option value="Portrait">Portrait</option>
+                    </select>
+                </div>
+                <div class="form-group" required>
+                    <label class="control-label" for="type">Sign Type</label>
+                    <select id="type" class="form-control" ng-model="vm.viewer.type">
+                        <option value="" disabled>Please make a selection</option>
+                        <option value="Agenda">Agenda</option>
+                        <option value="Custom">Custom</option>
+                        <option value="Directional">Directional</option>
+                        <option value="Event">Event</option>
+                        <option value="Info">Info</option>
+                        <option value="Room">Room</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="notes">Notes</label>
+                    <textarea name="notes" data-ng-model="vm.viewer.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes"></textarea>
+                </div>
+                <div class="form-group" required>
+                    <label class="control-label">Active Status</label>
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" name="active" id="isActive1" ng-model="vm.viewer.active" value="true" checked>
+                            Active
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="active" id="isActive2" ng-model="vm.viewer.active" value="false">
+                            Inactive
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" required>
+                    <label class="control-label">Publish Status</label>
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" name="published" id="isPublished1" ng-model="vm.viewer.published" value="true" checked>
+                            Published
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="published" id="isPublished2" ng-model="vm.viewer.published" value="false">
+                            Unpublished
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">{{vm.viewer._id ? 'Update' : 'Create'}}</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </section>

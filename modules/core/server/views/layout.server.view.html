@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-strict-di>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -34,8 +35,12 @@
   <!-- Manifest -->
   <link href="/manifest.json" rel="manifest">
 
+  <!--Font Awesome CSS-->
+  <link href="/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
+
   <!-- Application CSS Files -->
-  {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
+  {{#each cssFiles}}
+  <link rel="stylesheet" href="/{{this}}">{{/each}}
 </head>
 
 <body class="ng-cloak">
@@ -63,14 +68,15 @@
     var env = "{{ env }}";
   </script>
 
-  
+
 
   <!--Application JavaScript Files-->
-    {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
-  
+  {{#each jsFiles}}
+  <script type="text/javascript" src="/{{this}}"></script>{{/each}}
+
   <!--owasp config sync-->
   <script type="text/javascript">
-    var sharedConfig = {{{ sharedConfig }}};
+    var sharedConfig = {{{sharedConfig}}};
     owaspPasswordStrengthTest.config(sharedConfig.owasp);
   </script>
 
@@ -78,11 +84,14 @@
   <!--Livereload script rendered -->
   <!--<script type="text/javascript" src="{{host}}:35729/livereload.js"></script>-->
   {{/if}}
-  
+
   <!--Load The Socket.io File-->
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-  
   <script type="text/javascript" src="/lib/angular-socket-io/socket.js"></script>
+
+  <!--Angular Moment Files-->
+  <script src="/lib/moment/moment.js"></script>
+  <script src="/lib/angular-moment/angular-moment.js"></script>
 </body>
 
 </html>
